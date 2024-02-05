@@ -9,7 +9,6 @@ const Auth = () => {
     const [password, setPassword] = useState(null);
     const [confirmPassword, setConfirmPassword] = useState(null);
 
-    console.log(cookies);
     const viewLogin = (status) => {
         setError(null);
         setIsLogin(status)
@@ -45,7 +44,7 @@ const Auth = () => {
         <>
             <div className="auth-container">
                 <div className="auth-container-box">
-                    <form action="">
+                    <form>
                         <h2>{isLogin ? 'Please Log In' : 'Please Sign Up!'}</h2>
                         <input
                             type="email"
@@ -63,7 +62,7 @@ const Auth = () => {
                                 placeholder="confirm password"
                                 onChange={(e) => setConfirmPassword(e.target.value)}
                             />}
-                        <input type="submit" className="create" onClick={() => handleSubmit(e, isLogin ? 'login' : 'signup')} />
+                        <input type="submit" className="create" onClick={(e) => handleSubmit(e, isLogin ? 'login' : 'signup')} />
                         {error && <p>{error}</p>}
                     </form>
                     <div className="auth-options">

@@ -1,9 +1,10 @@
-import { useState, useEffect , createContext} from "react"
+import { useState, useEffect, createContext } from "react"
 import Modal from "./Modal";
 import { useCookies } from "react-cookie";
 import Tabs from '@mui/material/Tabs';
 import Tab from '@mui/material/Tab';
 import Box from '@mui/material/Box';
+import ListItem from "./ListItem";
 
 export const TasksContext = createContext("");
 
@@ -14,8 +15,7 @@ const ListHeader = () => {
     const [tabValue, setTabValue] = useState('Daily');
     const userEmail = cookies.Email;
     const authToken = cookies.AuthToken;
-    
-    
+
 
     const signOut = () => {
         removeCookie('Email');
@@ -27,7 +27,6 @@ const ListHeader = () => {
 
     const handleChange = async (e, newValue) => {
         setTabValue(newValue);
-
         console.log(tabValue);
 
         try {
@@ -40,15 +39,15 @@ const ListHeader = () => {
         }
     };
 
-    useEffect(() => {
+    useEffect((e) => {
         if (authToken) {
-            handleChange
+            handleChange(e, tabValue)
         }
 
     }, [tabValue])
 
-      //sort daily task by date
-  const sortedTasks = data?.sort((a, b) => new Date(a.date) - new Date(b.date));
+    //sort daily task by date
+    const sortedTasks = data?.sort((a, b) => new Date(a.date) - new Date(b.date));
 
 
     return (
@@ -61,11 +60,11 @@ const ListHeader = () => {
                         textColor="secondary"
                         indicatorColor="secondary"
                         aria-label="secondary tabs example"
-                        
+
                     >
-                        <Tab value="Daily" label="Daily" />
-                        <Tab value="Monthly" label="Monthly" />
-                        <Tab value="Yearly" label="Yearly" />
+                        <Tab value="Daily" label="Daily Task" />
+                        <Tab value="Monthly" label="Monthly Task" />
+                        <Tab value="Yearly" label="Yearly Task" />
                     </Tabs >
                 </Box>
 
@@ -74,7 +73,13 @@ const ListHeader = () => {
                     <button className="signout" onClick={signOut}>SIGN OUT</button>
                 </div>
             </div>
-            {showModal && <Modal mode={'create'} setShowModal={setShowModal} getData={data} />}
+            {showModal && <Modal mode={'create'} setShowModal={setShowModal} getData={handleChange} />}
+
+            <p className='user-email'>Welcome Back {userEmail}</p>
+            {sortedTasks?.map((task) =>
+                <ListItem key={task.id} tasks={task} getData={handleChange} />
+            )}
+            <p className='copyright'>&copy; Creative LLC</p>
         </>
     )
 }

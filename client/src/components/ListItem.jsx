@@ -6,6 +6,7 @@ import Modal from "./Modal";
 
 const ListItem = ({ tasks, getData }) => {
     const [showModal, setShowModal] = useState(false);
+    const [tabValue, setTabValue] = useState('Daily');
 
     const deleteData = async (e) => {
         e.preventDefault()
@@ -16,7 +17,7 @@ const ListItem = ({ tasks, getData }) => {
 
             if (response.status === 200) {
                 console.log('WORKED');
-                getData();
+                getData(e,tabValue);
             }
         } catch (err) {
             console.error(err);

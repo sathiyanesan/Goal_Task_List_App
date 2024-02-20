@@ -8,6 +8,7 @@ import NativeSelect from '@mui/material/NativeSelect';
 const Modal = ({ mode, setShowModal, getData, tasks }) => {
 
     const [cookies, setCookie, removeCookie] = useCookies(null);
+    const [tabValue, setTabValue] = useState('Daily');
 
     // const mode = 'create'
     const editMode = mode === 'edit' ? true : false;
@@ -32,7 +33,7 @@ const Modal = ({ mode, setShowModal, getData, tasks }) => {
             if (response.status === 200) {
                 console.log('WORKED');
                 setShowModal(false);
-                getData();
+                getData(e,tabValue);
             }
         } catch (err) {
             console.error(err);
@@ -51,7 +52,7 @@ const Modal = ({ mode, setShowModal, getData, tasks }) => {
             if (response.status === 200) {
                 console.log('WORKED');
                 setShowModal(false);
-                getData();
+                getData(e,tabValue);
             }
         } catch (err) {
             console.error(err);

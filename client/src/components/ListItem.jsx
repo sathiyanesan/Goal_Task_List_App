@@ -10,7 +10,7 @@ const ListItem = ({ tasks, getData }) => {
     const deleteData = async (e) => {
         e.preventDefault()
         try {
-            const response = await fetch(`http://localhost:8000/daily-goals/${tasks.id}`, {
+            const response = await fetch(`http://localhost:8000/goals/${tasks.id}`, {
                 method: 'DELETE'
             })
 

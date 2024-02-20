@@ -9,33 +9,34 @@ import { useCookies } from "react-cookie";
 
 const App = () => {
   const [cookies, setCookie, removeCookie] = useCookies(null);
-  const [dailyTasks, setDailyTasks] = useState(null);
+  const [data, setData] = useState(null);
+  const [tabValue, setTabValue] = useState('Daily');
   const userEmail = cookies.Email;
   const authToken = cookies.AuthToken;
+  console.log(data, tabValue);
 
-  const getData = async () => {
+//   const getData = async () => {
+//     try {
+//       const response = await fetch(`http://localhost:8000/goals/${userEmail}?goaltype=${tabValue}`);
+//       const jsonData = await response.json();
+//       setData(jsonData);
+//   } catch (err) {
+//       console.error(err)
+//   }
 
-    try {
-      const response = await fetch(`http://localhost:8000/daily-goals/${userEmail}`);
-      const jsonData = await response.json();
-      setDailyTasks(jsonData);
-    } catch (err) {
-      console.error(err)
-    }
+// }
 
-  }
+// useEffect(() => {
+//     if (authToken) {
+//         getData()
+//     }
 
-  useEffect(() => {
-    if (authToken) {
-      getData()
-    }
-
-  }, [])
-
-  console.log(dailyTasks);
+// }, [])
+  
+  console.log(data);
 
   //sort daily task by date
-  const sortedTasks = dailyTasks?.sort((a, b) => new Date(a.date) - new Date(b.date));
+  // const sortedTasks = data?.sort((a, b) => new Date(a.date) - new Date(b.date));
 
   return (
     <>
@@ -45,10 +46,10 @@ const App = () => {
 
         {authToken &&
           <>
-            <ListHeader listItem={"Daily goal list"} getData={getData} />
+            <ListHeader />
             <p className='user-email'>Welcome Back {userEmail}</p>
             {sortedTasks?.map((task) =>
-              <ListItem key={task.id} tasks={task} getData={getData} />
+              <ListItem key={task.id} tasks={task} getData={data} />
             )}
             <p className='copyright'>&copy; Creative LLC</p>
           </>}

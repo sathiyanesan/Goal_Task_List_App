@@ -1,12 +1,14 @@
 import { useState } from "react";
 
 import { useCookies } from "react-cookie";
+import InputLabel from '@mui/material/InputLabel';
+import NativeSelect from '@mui/material/NativeSelect';
 
 
 const Modal = ({ mode, setShowModal, getData, tasks }) => {
 
     const [cookies, setCookie, removeCookie] = useCookies(null);
-    
+
     // const mode = 'create'
     const editMode = mode === 'edit' ? true : false;
 
@@ -14,13 +16,14 @@ const Modal = ({ mode, setShowModal, getData, tasks }) => {
         user_email: editMode ? tasks.user_email : cookies.Email,
         title: editMode ? tasks.title : "",
         progress: editMode ? tasks.progress : 50,
-        date: editMode ? tasks.date : new Date()
+        date: editMode ? tasks.date : new Date(),
+        goaltype: editMode ? tasks.goaltype : "Daily"
     })
 
     const postData = async (e) => {
         e.preventDefault();
         try {
-            const response = await fetch(`http://localhost:8000/daily-goals/`, {
+            const response = await fetch(`http://localhost:8000/goals`, {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify(data)
@@ -39,7 +42,7 @@ const Modal = ({ mode, setShowModal, getData, tasks }) => {
     const editData = async (e) => {
         e.preventDefault()
         try {
-            const response = await fetch(`http://localhost:8000/daily-goals/${tasks.id}`, {
+            const response = await fetch(`http://localhost:8000/goals/${tasks.id}`, {
                 method: 'PUT',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify(data)
@@ -97,6 +100,22 @@ const Modal = ({ mode, setShowModal, getData, tasks }) => {
                             value={data.progress}
                             onChange={handleChange}
                         />
+                        <InputLabel variant="standard" htmlFor="uncontrolled-native">
+                            Task type
+                        </InputLabel>
+                        <NativeSelect
+                            onChange={handleChange}
+                            value={data.goaltype}
+                            inputProps={{
+                                name: 'goaltype',
+                                id: 'uncontrolled-native'
+                            }}
+                        >
+                            <option value="Daily">Daily</option>
+                            <option value="Monthly">Monthly</option>
+                            <option value="Yearly">Yearly</option>
+                        </NativeSelect>
+
                         <input className={mode} onClick={editMode ? editData : postData} type="submit" />
                     </form>
                 </div>

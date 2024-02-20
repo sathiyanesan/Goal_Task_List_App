@@ -62,9 +62,9 @@ const ListHeader = () => {
                         aria-label="secondary tabs example"
 
                     >
-                        <Tab value="Daily" label="Daily Task" />
-                        <Tab value="Monthly" label="Monthly Task" />
-                        <Tab value="Yearly" label="Yearly Task" />
+                        <Tab value="Daily" label="Daily Plan" />
+                        <Tab value="Monthly" label="Monthly Plan" />
+                        <Tab value="Yearly" label="Yearly Plan" />
                     </Tabs >
                 </Box>
 

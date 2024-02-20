@@ -102,7 +102,7 @@ const Modal = ({ mode, setShowModal, getData, tasks }) => {
                             onChange={handleChange}
                         />
                         <InputLabel variant="standard" htmlFor="uncontrolled-native">
-                            Task type
+                            Plan type
                         </InputLabel>
                         <NativeSelect
                             onChange={handleChange}
